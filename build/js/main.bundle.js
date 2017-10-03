@@ -3193,6 +3193,7 @@ var GeomagDemo = function () {
 
 		this.parseNode(_GeoTree2.default);
 		this.animate();
+		this.createLights();
 	}
 
 	_createClass(GeomagDemo, [{
@@ -3259,7 +3260,7 @@ var GeomagDemo = function () {
 				var positionTarget = new THREE.Vector3(THREE.Math.randFloat(-radius, radius), THREE.Math.randFloat(-radius, radius), THREE.Math.randFloat(-radius, radius));
 				new TWEEN.Tween(item.position).to(positionTarget, duration).easing(TWEEN.Easing.Exponential.Out).start();
 				if (item.name == "GeoPipe") {
-					new TWEEN.Tween(item.rotation).to({ z: THREE.Math.randFloat(0, 4 * Math.PI) }, duration).easing(TWEEN.Easing.Exponential.Out).start();
+					new TWEEN.Tween(item.rotation).to({ z: THREE.Math.randFloat(0, 20) }, duration).easing(TWEEN.Easing.Exponential.Out).start();
 				}
 			});
 			setTimeout(this.implode.bind(this), 3000);
@@ -3283,6 +3284,14 @@ var GeomagDemo = function () {
 			requestAnimationFrame(this.animate.bind(this));
 			this.renderer.render(this.scene, this.camera);
 			TWEEN.update(time);
+		}
+	}, {
+		key: "createLights",
+		value: function createLights() {
+			var light = new THREE.PointLight(0xffffff, 5, 200);
+			light.name = "Light";
+			light.position.set(50, 50, 50);
+			this.scene.add(light);
 		}
 	}]);
 
@@ -4373,41 +4382,65 @@ module.exports = function (THREE) {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _three = __webpack_require__(0);
 
 // Three Structure
 // {
-// "p":[
-// 		{	
-// 			"d":"0,0,-1",
-// 			"n":{
-// 					"p":[
-// 						{
-// 							"d":"-1,0,0",
-// 						 	"n":{}
-// 						 }
-// 					]
-// 				}
+// p:[
+// 		{
+// 			d:"0,1,0",
+// 			n:{
+// 				p:[
+// 					{d:"1,0,0",n:{}}
+// 				]
+// 			  }
 // 		},
+// 		{
+// 			d:"1,0,0",
+// 			n:{}
+// 		},
+// 		{
+// 			d:"0,0,-1",
+// 			n:{
+// 				p:[
+// 					{d:"1,0,0",n:{}}
+// 				]
+// 			}
+// 		}
+
 // 	]
 // };
 
 var GeoTree = {
-	p: [{
-		d: "0,1,0",
-		n: {
-			p: [{ d: "1,0,0", n: {} }]
-		}
-	}, {
-		d: "1,0,0",
-		n: {}
-	}, {
-		d: "0,0,-1",
-		n: {}
-	}]
+    p: [{
+        d: "1,0,0",
+        n: {
+            p: [{ d: "0,1,0", n: { p: [{ d: "0,0,1" }] } }, {
+                d: "0,0,1",
+                n: {
+                    p: [{ d: "0,1,0", n: {} }]
+                }
+            }]
+        }
+    }, {
+        d: "0,1,0",
+        n: {
+            p: [{ d: "1,0,0" }, { d: "0,0,1" }]
+        }
+    }, {
+        d: "0,0,1",
+        n: {
+            p: [{
+                d: "0,1,0",
+                n: {
+                    p: [{ d: "1,0,0" }]
+                }
+            }, { d: "1,0,0" }]
+        }
+    }]
 };
 
 exports.default = GeoTree;

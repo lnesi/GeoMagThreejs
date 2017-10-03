@@ -27,6 +27,7 @@ class GeomagDemo{
 
 		this.parseNode(GeoTree);
 		this.animate();
+		this.createLights();
 	}
 
 	parseNode(node,pointer=new THREE.Vector3()){
@@ -88,7 +89,7 @@ class GeomagDemo{
 			var positionTarget=new THREE.Vector3(THREE.Math.randFloat(-radius,radius),THREE.Math.randFloat(-radius,radius),THREE.Math.randFloat(-radius,radius));
 			new TWEEN.Tween(item.position).to(positionTarget,duration).easing(TWEEN.Easing.Exponential.Out).start();
 			if(item.name=="GeoPipe"){
-				new TWEEN.Tween(item.rotation).to({z:THREE.Math.randFloat(0,4*Math.PI)},duration).easing(TWEEN.Easing.Exponential.Out).start();
+				new TWEEN.Tween(item.rotation).to({z:THREE.Math.randFloat(0,20)},duration).easing(TWEEN.Easing.Exponential.Out).start();
 			}
 		
 			
@@ -118,6 +119,12 @@ class GeomagDemo{
 		TWEEN.update(time);
 	}
 
+	createLights(){
+		var light = new THREE.PointLight( 0xffffff, 5, 200 );
+		light.name="Light";
+		light.position.set( 50, 50, 50 );
+		this.scene.add( light );
+	}
 
 }
 var app=new GeomagDemo();
