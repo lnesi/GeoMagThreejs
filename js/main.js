@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import ColladaLoader from './ColladaLoader.js';
 import {TweenMax, Expo} from "gsap";
-
 import GeoBall from "./GeoBall.js";
 import GeoPipe from "./GeoPipe.js";
 var OrbitControls = require('three-orbit-controls')(THREE);
