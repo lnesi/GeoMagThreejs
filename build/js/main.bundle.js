@@ -3269,12 +3269,12 @@ var GeomagDemo = function () {
 		key: "implode",
 		value: function implode() {
 
-			this.geopieces.forEach(function (item) {
-				var delay = THREE.Math.randFloat(0, 3);
+			this.geopieces.forEach(function (item, index) {
+				var delay = 25 * index;
 				var duration = 2000;
-				new TWEEN.Tween(item.position).to(item.refPosition, duration).easing(TWEEN.Easing.Exponential.In).start();
+				new TWEEN.Tween(item.position).to(item.refPosition, duration).easing(TWEEN.Easing.Exponential.In).delay(delay).start();
 				if (item.name == "GeoPipe") {
-					new TWEEN.Tween(item.rotation).to({ z: item.refRotation.z }, duration).easing(TWEEN.Easing.Exponential.In).start();
+					new TWEEN.Tween(item.rotation).to({ z: item.refRotation.z }, duration).easing(TWEEN.Easing.Exponential.In).delay(delay).start();
 				}
 			});
 		}
