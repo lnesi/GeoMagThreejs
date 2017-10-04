@@ -15,7 +15,8 @@ class GeomagDemo{
 		this.scene = new THREE.Scene();
 		this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 		this.camera.name="Camera";
-		this.camera.position.z=20;
+		this.camera.position.z=350;
+		this.camera.position.x=150;
 		this.renderer = new THREE.WebGLRenderer({ alpha: true ,antialias:true});
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		document.getElementById("sceneHolder").appendChild( this.renderer.domElement );
@@ -31,7 +32,7 @@ class GeomagDemo{
 	}
 
 	parseNode(node,pointer=new THREE.Vector3()){
-		//console.log("PARSEING NODE:",node, "AT POINTER:",pointer);
+		console.log("PARSEING NODE:",node, "AT POINTER:",pointer);
 		var ball=new GeoBall();
 		ball.position.x=pointer.x;
 		ball.position.y=pointer.y;
@@ -53,7 +54,7 @@ class GeomagDemo{
 		var di=pole.d.split(',');
 		var direction=new THREE.Vector3(di[0],di[1],di[2]);
 		direction.normalize();
-	 //	console.log("PARSEING POLE:",pole, "AT POINTER:",pointer);
+	 	console.log("PARSEING POLE:",pole, "AT POINTER:",pointer);
 	 	
 	 	var pipe=new GeoPipe();
 
@@ -74,7 +75,6 @@ class GeomagDemo{
 	 	pipe.refPosition=pipe.position.clone();
 	 	pipe.refRotation=pipe.rotation.clone();
 	 	
-		console.log(pipe.rotation,pipe.refRotation);
 	 	this.geopieces.push(pipe);
 	 	if(pole.n){
 	 		this.parseNode(pole.n,pointer);
@@ -84,7 +84,7 @@ class GeomagDemo{
 
 	explode(){
 		this.geopieces.forEach(item=>{
-			var radius=50;
+			var radius=300;
 			var duration=1000;
 			var positionTarget=new THREE.Vector3(THREE.Math.randFloat(-radius,radius),THREE.Math.randFloat(-radius,radius),THREE.Math.randFloat(-radius,radius));
 			new TWEEN.Tween(item.position).to(positionTarget,duration).easing(TWEEN.Easing.Exponential.Out).start();
@@ -122,7 +122,7 @@ class GeomagDemo{
 	createLights(){
 		var light = new THREE.PointLight( 0xffffff, 5, 200 );
 		light.name="Light";
-		light.position.set( 50, 50, 50 );
+		light.position.set( 100, 100, 100 );
 		this.scene.add( light );
 	}
 
